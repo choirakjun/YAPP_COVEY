@@ -45,17 +45,17 @@ router.post('/', (req, res) => {
       uri: `https://api-sens.ncloud.com/v1/sms/services/ncp:sms:kr:256928778264:yapp_covey/messages`,
       headers: {
         'Content-Type': 'application/json',
-  //B9sh5OVaaiTGDzyZQ2Ox
+
   //      'X-NCP-auth-key': process.env.SENS_ACCESSKEYID,
-        'X-NCP-auth-key': 'B9sh5OVaaiTGDzyZQ2Ox',
+        'X-NCP-auth-key': 'xxxxxx',
 
   //      'X-NCP-service-secret': process.env.SENS_SERVICESECRET
-        'X-NCP-service-secret': 'ae70f49029954e3b9da77ad787d65aaa'
+        'X-NCP-service-secret': 'xxxxxxx'
 
       },
       body: {
         type: 'sms',
-        from: '01058509766',
+        from: 'xxxxxxx',
         to: [`${phoneNumber}`],
         content: `Covey 가입을 위한 인증번호 ${verificationNumber}입니다.`
       }
