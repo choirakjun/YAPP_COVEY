@@ -57,8 +57,8 @@ passport.deserializeUser((id,done)=>{
 
 //FACEBOOK STRATEGY 등록한다. 밑의 done이후 serialize 실행
 passport.use(new FacebookStrategy({
-  clientID: 'xxx',
-  clientSecret: 'xxxxx',
+  clientID: '#######',
+  clientSecret: `########`,
   //타사인증은 보안적으로 위험한 일이다. 그래서 그 과정에서 여러 방법으로 상호간의 검증이 필요하다.
   callbackURL: "/auth/facebook/callback",
   profileFields:['id','email','gender','link','locale','name','timezone','updated_time','verified',
@@ -109,9 +109,11 @@ passport.use(new FacebookStrategy({
               authI=rows[0].id;
 
               //email인증을 위한 verufy_key 생성
-              var key_one=crypto.randomBytes(256).toString('hex').substr(100, 5);
-              var key_two=crypto.randomBytes(256).toString('base64').substr(50, 5);
-              var key_for_verify=key_one+key_two;
+              // var key_one=crypto.randomBytes(256).toString('hex').substr(100, 5);
+              // var key_two=crypto.randomBytes(256).toString('base64').substr(50, 5);
+              // var key_for_verify=key_one+key_two;
+              var key_for_verify=Math.floor(Math.random()*10000000)+1;
+
               var query=connection.query(`update users set key_for_verify=? where snsId=?`,[key_for_verify,authId],(err,rows)=>{
                 if(err) console.error(err);
               });

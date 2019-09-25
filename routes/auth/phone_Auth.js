@@ -42,20 +42,20 @@ router.post('/', (req, res) => {
       request({
       method: 'POST',
       json: true,
-      uri: `https://api-sens.ncloud.com/v1/sms/services/ncp:sms:kr:256928778264:yapp_covey/messages`,
+      uri: `#######`,
       headers: {
         'Content-Type': 'application/json',
 
   //      'X-NCP-auth-key': process.env.SENS_ACCESSKEYID,
-        'X-NCP-auth-key': 'xxxxxx',
+        'X-NCP-auth-key': `########`
 
   //      'X-NCP-service-secret': process.env.SENS_SERVICESECRET
-        'X-NCP-service-secret': 'xxxxxxx'
+        'X-NCP-service-secret': '########'
 
       },
       body: {
         type: 'sms',
-        from: 'xxxxxxx',
+        from: '########',
         to: [`${phoneNumber}`],
         content: `Covey 가입을 위한 인증번호 ${verificationNumber}입니다.`
       }

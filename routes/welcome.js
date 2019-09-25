@@ -15,12 +15,21 @@ router.get('/',(req,res)=>{
 
 
   query =`
+
         <h1>Email인증</h1>
         <form action = '/auth/email' method ="post">
-          <input type = "text" name="email">
-         <input type ="submit">
+        <input type = "text" name="email">
+        <input type = "text" name="univ">
+       <input type ="submit">
          </form>
          <br>
+
+         <h1>Email인증번호받고 확인요청</h1>
+         <form action = '/auth/email/email_verified' method ="post">
+         <input type = "text" name="key">
+        <input type ="submit">
+          </form>
+
 
          <h1>페이스북 본인인증</h1>
          <a href="/auth/facebook"> facebook_logi </a>

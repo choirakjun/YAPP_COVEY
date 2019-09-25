@@ -25,7 +25,7 @@ var facebookRouter = require('./routes/auth/facebook');
 var emailRouter =require('./routes/auth/email')
 var welcome=require('./routes/welcome')
 var phone_Auth_Router=require('./routes/auth/phone_Auth')
-
+//var univ_domain_extract = require('./routes/univ_domain_extract');
 
 //세션 사용 설정
 app.use(session({
@@ -62,7 +62,7 @@ app.use('/auth/facebook',facebookRouter);
 app.use('/auth/email',emailRouter);
 app.use('/welcome',welcome);
 app.use('/auth/phone_Auth',phone_Auth_Router);
-
+//app.use('/univ_domain_extract',univ_domain_extract);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
