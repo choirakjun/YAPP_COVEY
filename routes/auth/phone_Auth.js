@@ -10,8 +10,12 @@ var request = require('request');
 var connection = mysql.createConnection(config);
 connection.connect()
 
-//E-mail발송.
-//문자메시지 verificationNumber를 생성하고
+//input
+/*
+phoneNumber:01058509766
+
+*/
+
 router.post('/', (req, res) => {
 
 
@@ -64,7 +68,7 @@ router.post('/', (req, res) => {
 
 
 
-  return res.json({ phoneNumber: phoneNumber });
+  return res.json({ "message": "전송 완료" });
 });
 
 
@@ -93,7 +97,7 @@ router.post('/verify_ans',(req,res)=>{
     console.log("phone authorizied");
     var query = connection.query(`update users set phoneNumber_authorized=? where id=?`,[1,session_id],(err,rows)=>{
       if(err) console.error(err);
-      res_data= {"phone_Num_verified":"true"}
+      res_data= {"phone_Num_verified":"success"}
       res.json(res_data);
     })
   }
@@ -101,7 +105,7 @@ router.post('/verify_ans',(req,res)=>{
     else
   {
     console.log("phone not authorizied");
-      res_data= {"phone_Num_verified":"false"}
+      res_data= {"phone_Num_verified":"fail"}
       res.json(res_data);
   }
 
