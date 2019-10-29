@@ -22,7 +22,7 @@ Reference: https://www.learn2crack.com/2014/08/android-upload-image-node-js-serv
 
 
 //input={postId:xxxx, post_img_num:1|2|3}
-app.post('/post_upload',function(req,res)=>{
+router.post('/post_upload',function(req,res)=>{
 
   console.log(req.files.image.originalFilename);
   console.log(req.files.image.path);
@@ -61,7 +61,7 @@ app.post('/post_upload',function(req,res)=>{
 
 //해당 해당 file이 저장된 경로를 찾고, 해당 이미지를 브라우저에 보여준다. !!Project랑 상관없음.
 //Resizing같은거 android에서 진행.
-app.get('/:postid', function (req, res){
+router.get('/:postid', function (req, res){
 
 
 		postid = req.params.postId;
@@ -117,7 +117,7 @@ router.post('/user_img', function(req, res, next) {
 
 //해당 해당 file이 저장된 경로를 찾고, 해당 이미지를 브라우저에 보여준다. !!Project랑 상관없음.
 //Resizing같은거 android에서 진행.
-app.get('/user_profile', function (req, res){
+router.get('/user_profile', function (req, res){
 
 
     user_Id=req.user.id;
@@ -148,7 +148,7 @@ module.exports = router;
 // //다른 내용만 저장하고 나중에 해당 postid를 return해서 진행하는게 편하긴 할거같다.
 // //이미지를 받고, 해당 경로에 이미지를 저장한다.
 // //Post 등록할 때, id와 연결해서 이미지 URL을 저장해야 함. 즉, DB에 업체명, 일시, 시간등을 먼저 저장하고 POST ID를 저장만든 후에 사진 추가한다.
-// app.post('/post_upload', function(req, res) {
+// router.post('/post_upload', function(req, res) {
 //
 //   //즉,request body에 postid싣어서 보내야 함. 나머지는 multer 데이터
 //     /*
