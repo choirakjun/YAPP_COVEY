@@ -5,6 +5,7 @@ var mysql = require('mysql');
 var config=require('../../config');
 var bodyParser = require('body-parser');
 var path = require('path');
+var mime = require("mime");
 
 // DATABASE SETTING
 var connection = mysql.createConnection(config);
@@ -38,33 +39,76 @@ router.post('/up',  upload.fields([{ name: 'img1' }, { name: 'img2' }, { name: '
 
 
   console.log(req.files);
-  img1_path=req.files.img1[0]['path'];
-  img2_path=req.files.img2[0]['path'];
-  img3_path=req.files.img3[0]['path'];
 
-  list=[];
-  list[0]=img1_path;
-  list[1]=img2_path;
-  list[2]=img2_path;
-  console.log(list);
+  //세개 다 있을 때
+  if(req.files.img2 !=null && req.files.img3!=null && req.files.img1!=null)
+  {
+    img1_path=req.files.img1[0]['path'];
+    img2_path=req.files.img2[0]['path'];
+    img3_path=req.files.img3[0]['path'];
+
+    list=[];
+    list[0]=img1_path;
+    list[1]=img2_path;
+    list[2]=img2_path;
+    console.log(list);
+
+  }
+  //첫 번 쨰만 있을 때
+  else if(req.files.img1 !=null && req.files.img2==null && req.files.img3==null)
+  {
+    img1_path=req.files.img1[0]['path'];
+
+    list=[];
+    list[0]=img1_path;
+    console.log(list);
+  }
+  //첫 번째 두번쨰만 있을 때
+  else if(req.files.img1 !=null  && req.files.img2!=null && req.files.img3==null)
+  {
+    img1_path=req.files.img1[0]['path'];
+    img2_path=req.files.img2[0]['path'];
+
+    list=[];
+    list[0]=img1_path;
+    list[1]=img2_path;
+    console.log(list);
+  }
+  //아우것도 없을 때
+  else if(req.files.img2 ==null && req.files.img3==null && req.files.img1==null)
+  {
+    list=[];
+    console.log(list);
+  }
 
 });
 
 
-//post수정
-router.post('/modify_post_img',  upload.fields([{ name: 'img1' }, { name: 'img2' }, { name: 'img3' },{name:'postid'}]), (req, res) => {
+//post수정. postid, postimg
+router.post('/modify_post_img',  upload.fields([{ name: 'img_num' }, { name: 'img' },{name:'postid'}]), (req, res) => {
 
   postid=req.body.postid;
-  img1_path=req.files.img1[0]['path'];
-  img2_path=req.files.img2[0]['path'];
-  img3_path=req.files.img3[0]['path'];
+  postid=parseInt(postid);
+  img_num=req.body.img_num;
+  img_num=`img_url`+img_num;
+  img_path=req.files.img[0]['path'];
 
-  list=[];
-  list[0]=img1_path;
-  list[1]=img1_path;
-  list[2]=img2_path;
-  console.log(list);
-  console.log(postid);
+  // console.log(postid);
+  // console.log(img_num);
+  // console.log(img_path);
+
+  var query = connection.query('update posts set'+img_num+
+
+
+   ?=? where id=?`,[img_num,img_path,postid],(err,rows)=>{
+
+    if(err) console.error(err);
+
+    res.json(rows);
+
+  })
+
+
   res.end();
 });
 
