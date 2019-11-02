@@ -14,9 +14,6 @@ connection.connect()
 
 
 //due data랑 비교해서 table삭제
-
-
-
 router.get('/process_due_posts', function (req, res){
 
 
@@ -32,5 +29,22 @@ router.get('/process_due_posts', function (req, res){
 //SELECT * FROM download WHERE expiry_date > NOW()
 
 
+
+//input: post_id:xxx
+router.post('/close_post',function(req,res)=>{
+
+
+  //
+  id=req.body.id;
+  var query = connection.query(`delete from Posts where id=?`,[id],(err,rows)=>{
+    if(err)res.json({"deleted:fail"});
+    else
+    {
+        res.json({"deleted:success"});
+    }
+
+  });
+
+});
 
 module.exports = router;
