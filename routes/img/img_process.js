@@ -117,36 +117,6 @@ router.post('/modify_post_img',  upload.fields([{ name: 'img_num' }, { name: 'im
 
 
 
-//postid에 해당하는 img_url 전체 return
-router.get('/post_img/:postid', function (req, res){
-
-    console.log(1);
-		postid = req.params.postid;
-    var query = connection.query(`select * from posts where id=?`,[postid],(err,rows)=>{
-      if(err) console.error(err);
-
-      res.json(rows);
-
-    })
-
-});
-
-//postid에 해당하는 img_url 전체 return
-router.get('/user_img', function (req, res){
-
-
-  user_id=req.user.id;
-  var query = connection.query(`select img from users where id=${user_id}`,(err,rows)=>{
-      console.log(rows);
-      res.json(rows);
-
-    })
-
-});
-
-
-
-
 
 
 
@@ -154,9 +124,9 @@ router.get('/user_img', function (req, res){
 //사용자 이미지 등록
 router.post('/user_img_up',upload.fields([{name:'img'}]),(req,res)=>{
 
-//   id_=req.user.id;
+  id_=req.user.id;
   img_path=req.files.img[0]['path'];
-  id_=5;
+
   var query = connection.query(`update users set img_url = '${img_path}' where id=${id_}`,(err,rows)=>{
     if(err) res.json({"image_upload":"fail"});
     else{
@@ -165,9 +135,6 @@ router.post('/user_img_up',upload.fields([{name:'img'}]),(req,res)=>{
   })
 
 })
-
-
-
 
 
 
