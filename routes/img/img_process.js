@@ -34,6 +34,16 @@ key img1, img2, img3에 대해서 각각 이미지파일  받는다.
 //이미지가 아닌 데이터는 req.body에 저장된다.
 //const upload = multer({ dest: 'uploads/', limits: { fileSize: 5 * 1024 * 1024 } });
 
+
+
+
+
+
+
+
+
+
+
 //POST저장
 router.post('/up',  upload.fields([{ name: 'img1' }, { name: 'img2' }, { name: 'img3' }]), (req, res) => {
 
@@ -97,26 +107,20 @@ router.post('/modify_post_img',  upload.fields([{ name: 'img_num' }, { name: 'im
   // console.log(img_num);
   // console.log(img_path);
 
-  var query = connection.query('update posts set'+img_num+
+  var query = connection.query(`update posts set ${img_num} = '${img_path}' where id = ${img_num}`, (err,rows)=>{
 
-
-   ?=? where id=?`,[img_num,img_path,postid],(err,rows)=>{
-
-    if(err) console.error(err);
-
-    res.json(rows);
-
+    if(err) console.log(err);
+    else console.log(rows);
   })
+})
 
 
-  res.end();
-});
 
 
 //postid에 해당하는 img_url 전체 return
-router.get('/:postid', function (req, res){
+router.get('/post_img/:postid', function (req, res){
 
-
+    console.log(1);
 		postid = req.params.postid;
     var query = connection.query(`select * from posts where id=?`,[postid],(err,rows)=>{
       if(err) console.error(err);
@@ -127,8 +131,40 @@ router.get('/:postid', function (req, res){
 
 });
 
+//postid에 해당하는 img_url 전체 return
+router.get('/user_img', function (req, res){
 
 
+  user_id=req.user.id;
+  var query = connection.query(`select img from users where id=${user_id}`,(err,rows)=>{
+      console.log(rows);
+      res.json(rows);
+
+    })
+
+});
+
+
+
+
+
+
+
+
+//사용자 이미지 등록
+router.post('/user_img_up',upload.fields([{name:'img'}]),(req,res)=>{
+
+//   id_=req.user.id;
+  img_path=req.files.img[0]['path'];
+  id_=5;
+  var query = connection.query(`update users set img_url = '${img_path}' where id=${id_}`,(err,rows)=>{
+    if(err) res.json({"image_upload":"fail"});
+    else{
+      res.json({"image_upload":"success"});
+    }
+  })
+
+})
 
 
 
